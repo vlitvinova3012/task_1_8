@@ -1,0 +1,32 @@
+1727602994324:listBooks
+1727603002749:List all books
+1727603030755:listBooks
+1727603036637:List all books
+1727603240025:get-all
+1727603552023:add --title "History" --genre "Novel" --author "Ivanov"
+1727603581515:get-all
+1727603610396:get-by-id --id 1
+1727603659123:get-all-by-author --author "Pushkin A.S."
+1727603748210:update --id 3 --title "new" --authorId 1 --genreId 1
+1727603784383:delete --id 1
+1727603928151:add --title "history" --genre "Novel" --author "Pushkin A.S."
+1727603955149:get-all
+1727603983425:add --title "history" --genre "Novella" --author "Ivanov"
+1727604023884:get-by-id --id 2
+1727604030207:get-by-id --id 22
+1727604115683:update --id 3 --title "History" --authorId 1 --genreId 1
+1727604146057:delete --id 1
+1727604324735:get-by-id --id1
+1727604331337:get-by-id --id 1
+1727604337883:get-by-id --id 2
+1727604512626:update --id 3 --title "History" --authorId 1 --genreId 1
+1727605000693:update --id 1 --title "History" --authorId 1 --genreId 1
+1727605036737:stacktrace
+1727605146462:update --id 1 --title "History" --authorId 1 --genreId 1
+1727605244369:update --id 11 --title "HH" --authorId 1 --genreId 1
+1727605515795:updated --id 1 --title "New Title" --authorId 2 --genreId 1
+1727605595231:update --id 1 --title "New Title" --authorId 2 --genreId 1
+1727605880742:add --title "HH" --genre "gg" --author"aa"
+1727605886687:stacktrace
+1727606333692:add --title "HH" --genre "gg" --author"aa"
+1727606345744:get-all
