@@ -5,8 +5,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.diasoft.spring.model.Book;
 
@@ -19,11 +17,16 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookDaoImpl implements BookDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final GenreDao genreDao;
+    private final AuthorDao authorDao;
 
     @Override
     public void createBook(String title, String genre, String author) {
-        Long genreId = getOrCreateGenre(genre);
-        Long authorId = getOrCreateAuthor(author);
+        if (title == null || title.isEmpty()) {
+            return;
+        }
+        Long genreId = genreDao.getOrCreateGenreIdByGenreName(genre);
+        Long authorId = authorDao.getOrCreateAuthorIdByAuthorName(author);
 
         if (genreId == null || authorId == null) {
             return;
@@ -36,51 +39,6 @@ public class BookDaoImpl implements BookDao {
                 .addValue("authorId", authorId);
 
         jdbcTemplate.update(insertBookSql, params);
-    }
-
-    protected Long getOrCreateGenre(String genre) {
-        String selectGenreSql = "SELECT id FROM Genre WHERE name = :name";
-        MapSqlParameterSource params = new MapSqlParameterSource().addValue("name", genre);
-
-        List<Long> genreIds = jdbcTemplate.query(selectGenreSql, params, (rs, rowNum) -> rs.getLong("id"));
-
-        Long genreId = null;
-        if (!genreIds.isEmpty()) {
-            genreId = genreIds.get(0);
-        }
-        if (genreId == null) {
-            String insertGenreSql = "INSERT INTO Genre (name) VALUES (:name)";
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(insertGenreSql, params, keyHolder, new String[]{"id"});
-            Number num = keyHolder.getKey();
-            if (num != null) {
-                genreId = num.longValue();
-            }
-        }
-        return genreId;
-    }
-
-    protected Long getOrCreateAuthor(String author) {
-        String selectAuthorSql = "SELECT id FROM Author WHERE name = :name";
-        MapSqlParameterSource params = new MapSqlParameterSource().addValue("name", author);
-
-        List<Long> authorIds = jdbcTemplate.query(selectAuthorSql, params, (rs, rowNum) -> rs.getLong("id"));
-
-        Long authorId = null;
-        if (!authorIds.isEmpty()) {
-            authorId = authorIds.get(0);
-        }
-        if (authorId == null) {
-            String insertAuthorSql = "INSERT INTO Author (name) VALUES (:name)";
-            KeyHolder keyHolder = new GeneratedKeyHolder();
-            jdbcTemplate.update(insertAuthorSql, params, keyHolder, new String[]{"id"});
-            Number num = keyHolder.getKey();
-            if (num != null) {
-                authorId = num.longValue();
-            }
-        }
-
-        return authorId;
     }
 
     @Override

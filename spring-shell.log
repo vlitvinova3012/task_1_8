@@ -30,3 +30,11 @@
 1727605886687:stacktrace
 1727606333692:add --title "HH" --genre "gg" --author"aa"
 1727606345744:get-all
+1737442232286:Add book
+1737442236977:add
+1737442307867:get-all
+1737442341884:add --title 'Pushkin'
+1737442437954:add --title 'Box' --genre 'Novel' --author 'Tolstoy L.N.'
+1737442444531:get-all
+1737448772764:add --title 'testName' --genre 'something' --author 'Nothing'
+1737449799366:get-all
